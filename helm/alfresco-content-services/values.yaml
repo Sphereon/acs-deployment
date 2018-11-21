@@ -12,8 +12,8 @@
 repository:
   replicaCount: 2
   image:
-    repository: alfresco/alfresco-content-repository
-    tag: "6.1.0-RC1"
+    repository: alfresco/alfresco-content-repository-community
+    tag: "6.1.0-ea"
     pullPolicy: Always
     internalPort: 8080
     hazelcastPort: 5701
@@ -24,6 +24,7 @@ repository:
   ingress:
     path: /alfresco
     maxUploadSize: "5g"
+    sslRedirect: "true"
   environment:
     JAVA_OPTS: " -Dsolr.base.url=/solr
       -Dsolr.secureComms=none

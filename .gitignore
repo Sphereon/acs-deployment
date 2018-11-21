@@ -1,4 +1,5 @@
 *.class
+secret-triall-agent-secrets.yaml
 
 war/overlays
 alfresco/*

@@ -49,6 +49,9 @@ spec:
           - name: data
             mountPath: {{ .Values.persistence.repository.data.mountPath }}
             subPath: {{ .Values.persistence.repository.data.subPath }}
+          - name: global-properties-shared
+            mountPath: /usr/local/tomcat/shared/classes/alfresco-global.properties
+            subPath: alfresco-global.properties
           {{- end }}
           readinessProbe:
             httpGet:
@@ -73,8 +76,11 @@ spec:
           image: busybox
           command: ['sh', '-c', 'until nc -w1 {{ printf "%s-%s" .Release.Name .Values.postgresql.nameOverride }} {{ .Values.postgresql.service.port }}; do echo "waiting for {{ printf "%s-%s" .Release.Name .Values.postgresql.nameOverride }}"; sleep 2; done;']
       {{- end }}
-      {{- if .Values.persistence.repository.enabled }}
       volumes:
+      - name: global-properties-shared
+        configMap:
+          name: {{ template "content-services.shortname" . }}-global-properties-shared
+      {{- if .Values.persistence.repository.enabled }}
       - name: data
         persistentVolumeClaim:
           claimName: {{ .Values.persistence.existingClaim }}

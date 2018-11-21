@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: triall-agent-env
+data:
+  BLOCKCHAIN_CERT_ALIAS: blockchain
+  BLOCKCHAIN_CERT_PATH: /tmp/cert/Triall-Blockchain.pfx
+
