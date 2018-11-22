@@ -1,8 +1,9 @@
 *.class
-secret-triall-agent-secrets.yaml
+install triall-dev chart.cmd
 
 war/overlays
 alfresco/*
+secrets/*
 
 # Eclipse
 .classpath

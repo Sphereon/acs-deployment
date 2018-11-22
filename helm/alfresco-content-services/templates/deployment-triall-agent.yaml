@@ -49,43 +49,43 @@ spec:
         version: 0.0.2-SNAPSHOT
     spec:
       containers:
-        - env:
-          - name: ALFRESCO_USERNAME
-            valueFrom:
-             configMapKeyRef:
-                name: triall-agent-secrets
-                key: ALFRESCO_USERNAME
-          - name: ALFRESCO_PASSWORD
-            valueFrom:
-             secretKeyRef:
-                name: triall-agent-secrets
-                key: ALFRESCO_PASSWORD
-          - name: BLOCKCHAIN_CERT_PATH
-            valueFrom:
-             configMapKeyRef:
-                name: triall-agent-env
-                key: BLOCKCHAIN_CERT_PATH
-          - name: BLOCKCHAIN_CERT_PASSWORD
-            valueFrom:
-             secretKeyRef:
-                name: triall-agent-secrets
-                key: BLOCKCHAIN_CERT_PASSWORD
-          - name: BLOCKCHAIN_CERT_ALIAS
-            valueFrom:
-             configMapKeyRef:
-                name: triall-agent-env
-                key: BLOCKCHAIN_CERT_ALIAS
-          - name: TRIALL_CONSUMER_KEY
-            valueFrom:
-             secretKeyRef:
-                name: triall-agent-secrets
-                key: TRIALL_CONSUMER_KEY
-          - name: TRIALL_CONSUMER_SECRET
-            valueFrom:
-             secretKeyRef:
-                name: triall-agent-secrets
-                key: TRIALL_CONSUMER_SECRET
-        image: sphereonregistrydev.azurecr.io/triall/triall-agent:snapshot-181115-160300-0491
+      - env:
+        - name: ALFRESCO_USERNAME
+          valueFrom:
+           secretKeyRef:
+            name: triall-agent-secrets
+            key: ALFRESCO_USERNAME
+        - name: ALFRESCO_PASSWORD
+          valueFrom:
+           secretKeyRef:
+            name: triall-agent-secrets
+            key: ALFRESCO_PASSWORD
+        - name: BLOCKCHAIN_CERT_PATH
+          valueFrom:
+           configMapKeyRef:
+            name: triall-agent-env
+            key: BLOCKCHAIN_CERT_PATH
+        - name: BLOCKCHAIN_CERT_PASSWORD
+          valueFrom:
+           secretKeyRef:
+            name: triall-agent-secrets
+            key: BLOCKCHAIN_CERT_PASSWORD
+        - name: BLOCKCHAIN_CERT_ALIAS
+          valueFrom:
+           configMapKeyRef:
+            name: triall-agent-env
+            key: BLOCKCHAIN_CERT_ALIAS
+        - name: BLOCKCHAIN_CONSUMER_KEY
+          valueFrom:
+           secretKeyRef:
+            name: triall-agent-secrets
+            key: BLOCKCHAIN_CONSUMER_KEY
+        - name: BLOCKCHAIN_CONSUMER_SECRET
+          valueFrom:
+           secretKeyRef:
+            name: triall-agent-secrets
+            key: BLOCKCHAIN_CONSUMER_SECRET
+        image: sphereonregistrydev.azurecr.io/triall/triall-agent:latest
         imagePullPolicy: IfNotPresent
         name: triall-triall-agent
         ports:
@@ -98,7 +98,7 @@ spec:
         terminationMessagePolicy: File
         volumeMounts:
         - name: triall-agent-secrets
-          mountPath: /tmp/cert/Triall-Blockchain.pfx          
+          mountPath: /tmp/cert/Triall-Blockchain.pfx        
           subPath: triall-blockchain-cert
         - name: triall-agent-properties
           mountPath: /deployments/config/application.properties
@@ -113,7 +113,7 @@ spec:
       volumes:
       - name: triall-agent-secrets
         secret:
-          secretName: triall-blockchain-certificate
+          secretName: triall-agent-secrets
       - name: triall-agent-properties
         configMap:
           name: triall-agent-properties

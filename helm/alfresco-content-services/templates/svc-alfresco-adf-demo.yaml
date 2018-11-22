@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: alfresco-adf-demo
+  labels:
+    app: alfresco-adf-demo
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    run: alfresco-adf-demo
+  sessionAffinity: None
