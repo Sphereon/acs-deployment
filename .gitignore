@@ -1,5 +1,5 @@
 *.class
-install triall-dev chart.cmd
+install*.cmd
 
 war/overlays
 alfresco/*
