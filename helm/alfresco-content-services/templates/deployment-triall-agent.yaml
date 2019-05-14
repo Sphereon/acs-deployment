@@ -85,6 +85,16 @@ spec:
            secretKeyRef:
             name: triall-agent-secrets
             key: BLOCKCHAIN_CONSUMER_SECRET
+        - name: OFFBLOCKS_CONSUMER_KEY
+          valueFrom:
+           secretKeyRef:
+            name: triall-agent-secrets
+            key: OFFBLOCKS_CONSUMER_KEY
+        - name: OFFBLOCKS_CONSUMER_SECRET
+          valueFrom:
+           secretKeyRef:
+            name: triall-agent-secrets
+            key: OFFBLOCKS_CONSUMER_SECRET    
         image: sphereonregistrydev.azurecr.io/triall/triall-agent:latest
         imagePullPolicy: IfNotPresent
         name: triall-triall-agent
