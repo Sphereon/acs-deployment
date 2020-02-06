@@ -29,12 +29,13 @@ spec:
           image: "{{ .Values.filestore.image.repository }}:{{ .Values.filestore.image.tag }}"
           imagePullPolicy: {{ .Values.filestore.image.pullPolicy }}
           envFrom:
-          - configMapRef:
-              # config map to use, defined in config-filestore.yaml
-              name: {{ template "alfresco.shortname" . }}-filestore-configmap
+            - configMapRef:
+                # config map to use, defined in config-filestore.yaml
+                name: {{ template "alfresco.shortname" . }}-filestore-configmap
           ports:
-            - containerPort: {{ .Values.filestore.image.internalPort }}
+              - containerPort: {{ .Values.filestore.image.internalPort }}
           resources:
+{{ toYaml .Values.filestore.resources | indent 12 }}
           readinessProbe:
             httpGet:
               path: /ready
@@ -50,16 +51,16 @@ spec:
             periodSeconds: {{ .Values.filestore.livenessProbe.periodSeconds }}
             failureThreshold: 1
             timeoutSeconds: {{ .Values.filestore.livenessProbe.timeoutSeconds }}
-{{ toYaml .Values.filestore.resources | indent 12 }}
-          {{- if .Values.persistence.filestore.enabled }}
-          volumeMounts:
-          - name: data
-            mountPath: {{ .Values.persistence.filestore.data.mountPath }}
-            subPath: {{ .Values.persistence.filestore.data.subPath }}
-          {{- end }}
-      {{- if .Values.persistence.filestore.enabled }}
-      volumes:
-      - name: data
-        persistentVolumeClaim:
-          claimName: {{ .Values.persistence.existingClaim }}
-      {{- end }}
+
+  {{- if .Values.persistence.filestore.enabled }}
+volumeMounts:
+  - name: data
+    mountPath: {{ .Values.persistence.filestore.data.mountPath }}
+    subPath: {{ .Values.persistence.filestore.data.subPath }}
+  {{- end }}
+  {{- if .Values.persistence.filestore.enabled }}
+volumes:
+  - name: data
+    persistentVolumeClaim:
+      claimName: {{ .Values.persistence.existingClaim }}
+  {{- end }}

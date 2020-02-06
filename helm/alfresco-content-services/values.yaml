@@ -307,7 +307,7 @@ alfresco-infrastructure:
 
 alfresco-search:
   enabled: true
-  repository: &repositoryHostPort 
+  repository: &repositoryHostPort
     # The value for "host" is the name of this chart
     host: alfresco-cs
     port: *repositoryExternalPort
@@ -384,8 +384,8 @@ s3connector:
 # for more information: https://github.com/Alfresco/alfresco-anaxes-shipyard/blob/master/SECRETS.md
 
 triall:
-    agent:
-        alfresco:
-            userName: admin
-        blockChain:
-            certificateAlias: blockchain
+  agent:
+    alfresco:
+      userName: admin
+    blockChain:
+      certificateAlias: blockchain
