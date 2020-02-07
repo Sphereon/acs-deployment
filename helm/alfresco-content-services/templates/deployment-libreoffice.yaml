@@ -33,7 +33,7 @@ spec:
               # config map to use, defined in config-libreoffice.yaml
               name: {{ template "content-services.shortname" . }}-libreoffice-configmap
           ports:
-            - containerPort: {{ .Values.libreoffice.image.internalPort }}
+          - containerPort: {{ .Values.libreoffice.image.internalPort }}
           resources:
 {{ toYaml .Values.libreoffice.resources | indent 12 }}
           readinessProbe:

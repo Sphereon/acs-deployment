@@ -76,6 +76,7 @@ transformrouter:
     periodSeconds: 120
     timeoutSeconds: 60
 
+
 # Declares the alfresco-pdf-renderer service used by the content repository
 # to transform pdf files
 pdfrenderer:
@@ -389,3 +390,7 @@ triall:
       userName: admin
     blockChain:
       certificateAlias: blockchain
+
+# define AI setting
+ai:
+  enabled: false

@@ -33,7 +33,7 @@ spec:
               # config map to use, defined in config-tika.yaml
               name: {{ template "content-services.shortname" . }}-tika-configmap
           ports:
-            - containerPort: {{ .Values.tika.image.internalPort }}
+          - containerPort: {{ .Values.tika.image.internalPort }}
           resources:
 {{ toYaml .Values.tika.resources | indent 12 }}
           readinessProbe:

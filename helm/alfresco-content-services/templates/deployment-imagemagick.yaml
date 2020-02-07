@@ -29,11 +29,11 @@ spec:
           image: "{{ .Values.imagemagick.image.repository }}:{{ .Values.imagemagick.image.tag }}"
           imagePullPolicy: {{ .Values.imagemagick.image.pullPolicy }}
           envFrom:
-            - configMapRef:
-                # config map to use, defined in config-imagemagick.yaml
-                name: {{ template "content-services.shortname" . }}-imagemagick-configmap
+          - configMapRef:
+            # config map to use, defined in config-imagemagick.yaml
+              name: {{ template "content-services.shortname" . }}-imagemagick-configmap
           ports:
-              - containerPort: {{ .Values.imagemagick.image.internalPort }}
+          - containerPort: {{ .Values.imagemagick.image.internalPort }}
           resources:
 {{ toYaml .Values.imagemagick.resources | indent 12 }}
           readinessProbe:

@@ -1,4 +1,4 @@
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   name: alfresco-adf-demo
@@ -16,7 +16,8 @@ spec:
   - host: {{ .Values.externalHost }}
     http:
       paths:
-      - backend:
+      - path: /
+        backend:
           serviceName: alfresco-adf-demo
           servicePort: 80
-        path: /
+
