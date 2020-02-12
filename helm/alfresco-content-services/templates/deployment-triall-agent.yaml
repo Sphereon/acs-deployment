@@ -95,7 +95,7 @@ spec:
            secretKeyRef:
             name: triall-agent-secrets
             key: OFFBLOCKS_CONSUMER_SECRET    
-        image: sphereonregistrydev.azurecr.io/triall/triall-agent:snapshot-190225-120210-0117git remot
+        image: sphereonregistrydev.azurecr.io/triall/triall-agent:snapshot-190225-120210-0117
         imagePullPolicy: IfNotPresent
         name: triall-triall-agent
         ports:
