@@ -6,6 +6,7 @@ data:
   app.config.json: |
     {
         "ecmHost": "https://{hostname}{:port}",
+        "baseShareUrl": null,
         "providers": "ECM",
         "authType" : "BASIC",
         "application": {
@@ -14,6 +15,18 @@ data:
             "copyright":
                 "© 2017 - 2018 Triall, Alfresco Software, Inc. All rights reserved."
         },
+        "oauth2": {
+            "host": "http://localhost:30081/auth/realms/myrealm",
+            "clientId": "alfresco",
+            "scope": "openid",
+            "secret": "",
+            "implicitFlow": true,
+            "silentLogin": true,
+            "redirectSilentIframeUri": "/assets/silent-refresh.html",
+            "redirectUri": "/",
+            "redirectUriLogout": "/logout"
+          },
+        "blockchainAgentHost": "https://{hostname}{:port}",
         "experimental": {
             "cardview": false,
             "extensions": false,
