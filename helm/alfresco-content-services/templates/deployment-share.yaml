@@ -28,7 +28,7 @@ spec:
           image: "{{ .Values.share.image.repository }}:{{ .Values.share.image.tag }}"
           imagePullPolicy: {{ .Values.share.image.pullPolicy }}
           ports:
-            - containerPort: {{ .Values.share.image.internalPort }}
+          - containerPort: {{ .Values.share.image.internalPort }}
           resources:
 {{ toYaml .Values.share.resources | indent 12 }}
           envFrom:

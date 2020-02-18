@@ -33,8 +33,9 @@ spec:
               # config map to use, defined in config-pdfrenderer.yaml
               name: {{ template "content-services.shortname" . }}-pdfrenderer-configmap
           ports:
-            - containerPort: {{ .Values.pdfrenderer.image.internalPort }}
+          - containerPort: {{ .Values.pdfrenderer.image.internalPort }}
           resources:
+{{ toYaml .Values.pdfrenderer.resources | indent 12 }}
           readinessProbe:
             httpGet:
               path: /ready
@@ -50,4 +51,4 @@ spec:
             periodSeconds: {{ .Values.pdfrenderer.livenessProbe.periodSeconds }}
             failureThreshold: 1
             timeoutSeconds: {{ .Values.pdfrenderer.livenessProbe.timeoutSeconds }}
-{{ toYaml .Values.pdfrenderer.resources | indent 12 }}
+
