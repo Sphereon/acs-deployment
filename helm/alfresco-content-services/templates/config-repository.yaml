@@ -1,5 +1,19 @@
+#
 apiVersion: v1
+kind: ConfigMap
+metadata:
+  #
+  name: triall-prod-alfresco-alfresco-cs-repository-configmap
+  labels:
+    heritage: Tiller
+    release: triall-prod-alfresco
+    chart: alfresco-content-services-triall-1.1.6
+    component: repository
 data:
+  JAVA_OPTS: ' -Dsolr.base.url=/solr -Dsolr.secureComms=none -Dindex.subsystem.name=solr6
+    -Dalfresco.cluster.enabled=true -Ddeployment.method=HELM_CHART -Dlocal.transform.service.enabled=true
+    -Dtransform.service.enabled=true -Xms2000M -Xmx2000M'
+  RELEASE_NAME: triall-prod-alfresco
   ALFRESCO_OPTS: ' -Dalfresco.host=app.triall.io -Dalfresco.protocol=https -Dalfresco.port=443
     -Dshare.protocol=https -Dshare.host=app.triall.io -Dshare.port=443 -Dalfresco_user_store.adminpassword=209c6174da490caeb422f3fa5a7ae634
     -Dcsrf.filter.origin=https://app.triall.io -Dcsrf.filter.referer=https://app.triall.io/.*
@@ -11,16 +25,3 @@ data:
   CATALINA_OPTS: ' $ALFRESCO_OPTS -Ddb.driver=org.postgresql.Driver -Ddb.url=jdbc:postgresql://triall-prod-alfresco-postgresql-acs:5432/alfresco
     -Ddb.username=$DATABASE_USERNAME -Ddb.password=$DATABASE_PASSWORD -Ds3.accessKey=$ACCESSKEY
     -Ds3.secretKey=$SECRETKEY -Ds3.encryption=$ENCRYPTION -Ds3.awsKmsKeyId=$KMSKEYID'
-  JAVA_OPTS: ' -Dsolr.base.url=/solr -Dsolr.secureComms=none -Dindex.subsystem.name=solr6
-    -Dalfresco.cluster.enabled=true -Ddeployment.method=HELM_CHART -Dlocal.transform.service.enabled=true
-    -Dtransform.service.enabled=true -Xms2000M -Xmx2000M'
-  RELEASE_NAME: triall-prod-alfresco
-kind: ConfigMap
-metadata:
-  labels:
-    chart: alfresco-content-services-triall-1.1.6
-    component: repository
-    heritage: Tiller
-    release: triall-prod-alfresco
-  name: triall-prod-alfresco-alfresco-cs-repository-configmap
-  namespace: triall-prod

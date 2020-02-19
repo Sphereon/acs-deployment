@@ -1,12 +1,7 @@
 apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: triall-agent-env
 data:
   BLOCKCHAIN_CERT_ALIAS: blockchain
   BLOCKCHAIN_CERT_PATH: /tmp/cert/Triall-Blockchain.pfx
-kind: ConfigMap
-metadata:
-  creationTimestamp: "2019-06-19T09:46:48Z"
-  name: triall-agent-env
-  namespace: triall-prod
-  resourceVersion: "13444599"
-  selfLink: /api/v1/namespaces/triall-prod/configmaps/triall-agent-env
-  uid: 2851f0fb-9277-11e9-98e6-06ce065d3256

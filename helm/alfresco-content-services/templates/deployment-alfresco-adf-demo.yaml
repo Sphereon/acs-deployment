@@ -1,17 +1,9 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  annotations:
-    deployment.kubernetes.io/revision: "3"
-  creationTimestamp: "2019-06-19T09:46:49Z"
-  generation: 3
+  name: alfresco-adf-demo
   labels:
     app: alfresco-adf-demo
-  name: alfresco-adf-demo
-  namespace: triall-prod
-  resourceVersion: "13478647"
-  selfLink: /apis/extensions/v1beta1/namespaces/triall-prod/deployments/alfresco-adf-demo
-  uid: 28851a43-9277-11e9-98e6-06ce065d3256
 spec:
   progressDeadlineSeconds: 600
   replicas: 1
@@ -30,6 +22,8 @@ spec:
       labels:
         run: alfresco-adf-demo
     spec:
+      imagePullSecrets:
+        - name: sphereonregistrydev
       containers:
       - image: sphereonregistrydev.azurecr.io/alfresco/adf-demo:spms-415
         imagePullPolicy: Always
@@ -41,37 +35,16 @@ spec:
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
         volumeMounts:
-        - mountPath: /usr/share/nginx/html/app.config.json
           name: triall-app-config
+        - mountPath: /usr/share/nginx/html/app.config.json
           subPath: app.config.json
+      volumes:
+        name: triall-app-config
+        - configMap:
+            defaultMode: 420
+            name: triall-app-config
       dnsPolicy: ClusterFirst
-      imagePullSecrets:
-      - name: sphereonregistrydev
       restartPolicy: Always
       schedulerName: default-scheduler
       securityContext: {}
       terminationGracePeriodSeconds: 30
-      volumes:
-      - configMap:
-          defaultMode: 420
-          name: triall-app-config
-        name: triall-app-config
-status:
-  availableReplicas: 1
-  conditions:
-  - lastTransitionTime: "2019-06-19T09:46:49Z"
-    lastUpdateTime: "2019-06-19T09:46:49Z"
-    message: Deployment has minimum availability.
-    reason: MinimumReplicasAvailable
-    status: "True"
-    type: Available
-  - lastTransitionTime: "2019-06-19T09:46:49Z"
-    lastUpdateTime: "2019-06-19T15:26:44Z"
-    message: ReplicaSet "alfresco-adf-demo-bd956f45" has successfully progressed.
-    reason: NewReplicaSetAvailable
-    status: "True"
-    type: Progressing
-  observedGeneration: 3
-  readyReplicas: 1
-  replicas: 1
-  updatedReplicas: 1

@@ -1,4 +1,7 @@
 apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: triall-app-config
 data:
   app.config.json: |
     {
@@ -236,11 +239,3 @@ data:
             ]
         }
     }
-kind: ConfigMap
-metadata:
-  creationTimestamp: "2019-06-19T09:46:48Z"
-  name: triall-app-config
-  namespace: triall-prod
-  resourceVersion: "13444601"
-  selfLink: /api/v1/namespaces/triall-prod/configmaps/triall-app-config
-  uid: 2853a955-9277-11e9-98e6-06ce065d3256

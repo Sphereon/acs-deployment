@@ -1,4 +1,13 @@
+#
 apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: triall-prod-alfresco-alfresco-cs-pdfrenderer-configmap
+  labels:
+    heritage: Tiller
+    release: triall-prod-alfresco
+    chart: alfresco-content-services-triall-1.1.6
+    component: transformers
 data:
   FILE_STORE_URL: http://triall-prod-alfresco-alfresco-filestore:80/alfresco/api/-default-/private/sfs/versions/1/file
   JAVA_OPTS: ' -Xms256M -Xmx256M'
@@ -6,12 +15,3 @@ data:
   livenessTransformPeriodSeconds: "600"
   maxTransformSeconds: "1200"
   maxTransforms: "10000"
-kind: ConfigMap
-metadata:
-  labels:
-    chart: alfresco-content-services-triall-1.1.6
-    component: transformers
-    heritage: Tiller
-    release: triall-prod-alfresco
-  name: triall-prod-alfresco-alfresco-cs-pdfrenderer-configmap
-  namespace: triall-prod

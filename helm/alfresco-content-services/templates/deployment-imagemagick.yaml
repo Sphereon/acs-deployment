@@ -1,32 +1,17 @@
+#
+#
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  annotations:
-    deployment.kubernetes.io/revision: "1"
-  creationTimestamp: "2019-06-19T09:46:49Z"
-  generation: 1
+  name: triall-prod-alfresco-alfresco-cs-imagemagick
   labels:
     app: triall-prod-alfresco-alfresco-cs-imagemagick
     chart: alfresco-content-services-triall-1.1.6
-    component: transformers
-    heritage: Tiller
     release: triall-prod-alfresco
-  name: triall-prod-alfresco-alfresco-cs-imagemagick
-  namespace: triall-prod
+    heritage: Tiller
+    component: transformers
 spec:
-  progressDeadlineSeconds: 2147483647
   replicas: 1
-  revisionHistoryLimit: 10
-  selector:
-    matchLabels:
-      app: triall-prod-alfresco-alfresco-cs-imagemagick
-      component: transformers
-      release: triall-prod-alfresco
-  strategy:
-    rollingUpdate:
-      maxSurge: 1
-      maxUnavailable: 1
-    type: RollingUpdate
   template:
     metadata:
       creationTimestamp: null

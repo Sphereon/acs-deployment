@@ -1,16 +1,16 @@
 apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: triall-prod-alfresco-alfresco-filestore-configmap
+  labels:
+    heritage: Tiller
+    release: triall-prod-alfresco
+    chart: alfresco-content-services-triall-1.1.6
+    component: transformers
+
 data:
   JAVA_OPTS: ' -Xms256M -Xmx256M'
   livenessPercent: "150"
   livenessSavePeriodSeconds: "600"
   scheduler.cleanup.interval: "86400000"
   scheduler.content.age.millis: "86400000"
-kind: ConfigMap
-metadata:
-  labels:
-    chart: alfresco-content-services-triall-1.1.6
-    component: transformers
-    heritage: Tiller
-    release: triall-prod-alfresco
-  name: triall-prod-alfresco-alfresco-filestore-configmap
-  namespace: triall-prod

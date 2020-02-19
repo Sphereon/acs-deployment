@@ -9,8 +9,6 @@ metadata:
     fabric8.io/metrics-path: dashboard/file/kubernetes-pods.json/?var-project=triall-agent&var-version=0.0.2-SNAPSHOT
     fabric8.io/scm-tag: HEAD
     fabric8.io/scm-url: https://github.com/spring-projects/spring-boot/spring-boot-starter-parent/triall-agent
-  creationTimestamp: "2019-06-19T09:46:49Z"
-  generation: 2
   labels:
     app: triall-agent
     group: com.triall
@@ -20,10 +18,6 @@ metadata:
     provider: fabric8
     version: 0.0.2-SNAPSHOT
   name: triall-agent
-  namespace: triall-prod
-  resourceVersion: "16679059"
-  selfLink: /apis/extensions/v1beta1/namespaces/triall-prod/deployments/triall-agent
-  uid: 289300fa-9277-11e9-98e6-06ce065d3256
 spec:
   progressDeadlineSeconds: 600
   replicas: 1
@@ -59,38 +53,38 @@ spec:
         - name: ALFRESCO_USERNAME
           valueFrom:
             secretKeyRef:
-              key: ALFRESCO_USERNAME
               name: triall-agent-secrets
+              key: ALFRESCO_USERNAME
         - name: ALFRESCO_PASSWORD
           valueFrom:
             secretKeyRef:
-              key: ALFRESCO_PASSWORD
               name: triall-agent-secrets
+              key: ALFRESCO_PASSWORD
         - name: BLOCKCHAIN_CERT_PATH
           valueFrom:
             configMapKeyRef:
-              key: BLOCKCHAIN_CERT_PATH
               name: triall-agent-env
+              key: BLOCKCHAIN_CERT_PATH
         - name: BLOCKCHAIN_CERT_PASSWORD
           valueFrom:
             secretKeyRef:
-              key: BLOCKCHAIN_CERT_PASSWORD
               name: triall-agent-secrets
+              key: BLOCKCHAIN_CERT_PASSWORD
         - name: BLOCKCHAIN_CERT_ALIAS
           valueFrom:
             configMapKeyRef:
-              key: BLOCKCHAIN_CERT_ALIAS
               name: triall-agent-env
+              key: BLOCKCHAIN_CERT_ALIAS
         - name: BLOCKCHAIN_CONSUMER_KEY
           valueFrom:
             secretKeyRef:
-              key: BLOCKCHAIN_CONSUMER_KEY
               name: triall-agent-secrets
+              key: BLOCKCHAIN_CONSUMER_KEY
         - name: BLOCKCHAIN_CONSUMER_SECRET
           valueFrom:
             secretKeyRef:
-              key: BLOCKCHAIN_CONSUMER_SECRET
               name: triall-agent-secrets
+              key: BLOCKCHAIN_CONSUMER_SECRET
         - name: OFFBLOCKS_CONSUMER_KEY
           valueFrom:
             secretKeyRef:
@@ -99,8 +93,8 @@ spec:
         - name: OFFBLOCKS_CONSUMER_SECRET
           valueFrom:
             secretKeyRef:
-              key: OFFBLOCKS_CONSUMER_SECRET
               name: triall-agent-secrets
+              key: OFFBLOCKS_CONSUMER_SECRET
         image: sphereonregistrydev.azurecr.io/triall/triall-agent:snapshot-190225-120210-0117
         imagePullPolicy: IfNotPresent
         name: triall-triall-agent
@@ -139,22 +133,3 @@ spec:
             path: application.properties
           name: triall-agent-properties
         name: triall-agent-properties
-status:
-  availableReplicas: 1
-  conditions:
-  - lastTransitionTime: "2019-06-19T09:46:50Z"
-    lastUpdateTime: "2019-06-19T09:46:50Z"
-    message: Deployment has minimum availability.
-    reason: MinimumReplicasAvailable
-    status: "True"
-    type: Available
-  - lastTransitionTime: "2019-06-19T09:46:49Z"
-    lastUpdateTime: "2019-06-19T14:48:12Z"
-    message: ReplicaSet "triall-agent-86858d94b6" has successfully progressed.
-    reason: NewReplicaSetAvailable
-    status: "True"
-    type: Progressing
-  observedGeneration: 2
-  readyReplicas: 1
-  replicas: 1
-  updatedReplicas: 1
