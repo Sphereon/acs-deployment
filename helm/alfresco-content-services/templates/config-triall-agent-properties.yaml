@@ -1,0 +1,14 @@
+apiVersion: v1
+data:
+  application.properties: "blockchain.config-name=triall-factom-prod\r\nalfresco-username=foo\r\nalfresco-password=bar\r\nalfresco.dns-name=app.triall.io\r\nalfresco.api-client.base-url=https://app.triall.io\r\nspring.application.name=triall-agent\r\ntriall.api.version=0.1\r\n#
+    lets listen on all ports to ensure we can be invoked from the pod IP\r\nserver.address=0.0.0.0\r\nserver.port=22240\r\n\r\nmanagement.address=0.0.0.0\r\n#
+    lets use a different management poprt in case you need to listen to HTTP requests
+    on 8080\r\nmanagement.port=22241\r\n"
+kind: ConfigMap
+metadata:
+  creationTimestamp: "2019-06-19T09:46:48Z"
+  name: triall-agent-properties
+  namespace: triall-prod
+  resourceVersion: "16678390"
+  selfLink: /api/v1/namespaces/triall-prod/configmaps/triall-agent-properties
+  uid: 2852c817-9277-11e9-98e6-06ce065d3256

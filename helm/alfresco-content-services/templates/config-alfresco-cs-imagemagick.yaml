@@ -1,0 +1,21 @@
+apiVersion: v1
+data:
+  FILE_STORE_URL: http://triall-prod-alfresco-alfresco-filestore:80/alfresco/api/-default-/private/sfs/versions/1/file
+  JAVA_OPTS: ' -Xms256M -Xmx256M'
+  livenessPercent: "150"
+  livenessTransformPeriodSeconds: "600"
+  maxTransformSeconds: "900"
+  maxTransforms: "10000"
+kind: ConfigMap
+metadata:
+  creationTimestamp: "2019-06-19T09:46:48Z"
+  labels:
+    chart: alfresco-content-services-triall-1.1.6
+    component: transformers
+    heritage: Tiller
+    release: triall-prod-alfresco
+  name: triall-prod-alfresco-alfresco-cs-imagemagick-configmap
+  namespace: triall-prod
+  resourceVersion: "13444592"
+  selfLink: /api/v1/namespaces/triall-prod/configmaps/triall-prod-alfresco-alfresco-cs-imagemagick-configmap
+  uid: 284b8312-9277-11e9-98e6-06ce065d3256

@@ -1,0 +1,114 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "1"
+  creationTimestamp: "2019-06-19T09:46:48Z"
+  generation: 1
+  labels:
+    app: triall-prod-alfresco-activemq
+    chart: activemq-1
+    heritage: Tiller
+    release: triall-prod-alfresco
+  name: triall-prod-alfresco-activemq
+  namespace: triall-prod
+  resourceVersion: "13445191"
+  selfLink: /apis/extensions/v1beta1/namespaces/triall-prod/deployments/triall-prod-alfresco-activemq
+  uid: 2880f09c-9277-11e9-98e6-06ce065d3256
+spec:
+  progressDeadlineSeconds: 2147483647
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: triall-prod-alfresco-activemq
+      release: triall-prod-alfresco
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: triall-prod-alfresco-activemq
+        release: triall-prod-alfresco
+    spec:
+      containers:
+      - env:
+        - name: ACTIVEMQ_CONFIG_MINMEMORY
+          value: "512"
+        - name: ACTIVEMQ_CONFIG_MAXMEMORY
+          value: "2048"
+        - name: ACTIVEMQ_BROKER_NAME
+          value: triall-prod-alfresco-activemq
+        - name: ACTIVEMQ_ADMIN_LOGIN
+          value: admin
+        - name: ACTIVEMQ_ADMIN_PASSWORD
+          value: admin
+        image: alfresco/alfresco-activemq:5.15.6-java-8-oracle-centos-7-ac5b98b35cd4
+        imagePullPolicy: Always
+        livenessProbe:
+          failureThreshold: 1
+          initialDelaySeconds: 130
+          periodSeconds: 20
+          successThreshold: 1
+          tcpSocket:
+            port: 61616
+          timeoutSeconds: 10
+        name: activemq
+        ports:
+        - containerPort: 61613
+          name: stomp
+          protocol: TCP
+        - containerPort: 61616
+          name: openwire
+          protocol: TCP
+        - containerPort: 5672
+          name: amqp
+          protocol: TCP
+        - containerPort: 8161
+          name: web-console
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 6
+          initialDelaySeconds: 60
+          periodSeconds: 20
+          successThreshold: 1
+          tcpSocket:
+            port: 61616
+          timeoutSeconds: 10
+        resources:
+          limits:
+            memory: 2Gi
+          requests:
+            memory: 512Mi
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /data
+          name: data
+          subPath: triall-prod/alfresco/acs/activemq-data
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: alfresco-volume-claim
+status:
+  availableReplicas: 1
+  conditions:
+  - lastTransitionTime: "2019-06-19T09:46:49Z"
+    lastUpdateTime: "2019-06-19T09:46:49Z"
+    message: Deployment has minimum availability.
+    reason: MinimumReplicasAvailable
+    status: "True"
+    type: Available
+  observedGeneration: 1
+  readyReplicas: 1
+  replicas: 1
+  updatedReplicas: 1

@@ -1,0 +1,22 @@
+apiVersion: v1
+data:
+  SOLR_ALFRESCO_HOST: triall-prod-alfresco-alfresco-cs-repository
+  SOLR_ALFRESCO_PORT: "80"
+  SOLR_CREATE_ALFRESCO_DEFAULTS: alfresco,archive
+  SOLR_JAVA_MEM: -Xms2000M -Xmx2000M
+  SOLR_OPTS: -Dsolr.content.dir=/opt/alfresco-search-services/data/contentstore
+  SOLR_SOLR_HOST: triall-prod-alfresco-alfresco-search-solr
+  SOLR_SOLR_PORT: "80"
+kind: ConfigMap
+metadata:
+  creationTimestamp: "2019-06-19T09:46:48Z"
+  labels:
+    chart: alfresco-search-0.0.7
+    component: search
+    heritage: Tiller
+    release: triall-prod-alfresco
+  name: triall-prod-alfresco-alfresco-search-solr-configmap
+  namespace: triall-prod
+  resourceVersion: "13444589"
+  selfLink: /api/v1/namespaces/triall-prod/configmaps/triall-prod-alfresco-alfresco-search-solr-configmap
+  uid: 2848ce19-9277-11e9-98e6-06ce065d3256

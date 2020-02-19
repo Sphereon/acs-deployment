@@ -1,0 +1,96 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "1"
+  creationTimestamp: "2019-06-19T09:46:48Z"
+  generation: 1
+  labels:
+    app: triall-prod-alfresco-alfresco-search-solr
+    chart: alfresco-search-0.0.7
+    component: search
+    heritage: Tiller
+    release: triall-prod-alfresco
+  name: triall-prod-alfresco-alfresco-search-solr
+  namespace: triall-prod
+  resourceVersion: "13473121"
+  selfLink: /apis/extensions/v1beta1/namespaces/triall-prod/deployments/triall-prod-alfresco-alfresco-search-solr
+  uid: 288254ca-9277-11e9-98e6-06ce065d3256
+spec:
+  progressDeadlineSeconds: 2147483647
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: triall-prod-alfresco-alfresco-search-solr
+      release: triall-prod-alfresco
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: triall-prod-alfresco-alfresco-search-solr
+        release: triall-prod-alfresco
+    spec:
+      containers:
+      - envFrom:
+        - configMapRef:
+            name: triall-prod-alfresco-alfresco-search-solr-configmap
+        image: alfresco/alfresco-search-services:1.3.0-RC1
+        imagePullPolicy: Always
+        name: alfresco-search
+        ports:
+        - containerPort: 8983
+          protocol: TCP
+        resources:
+          limits:
+            memory: 2500Mi
+          requests:
+            memory: 2500Mi
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /opt/alfresco-search-services/data
+          name: data
+          subPath: triall-prod/alfresco/acs/solr-data
+      dnsPolicy: ClusterFirst
+      initContainers:
+      - command:
+        - sh
+        - -c
+        - chown -R 1000:1000 /opt/alfresco-search-services/data
+        image: busybox
+        imagePullPolicy: Always
+        name: init-db
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /opt/alfresco-search-services/data
+          name: data
+          subPath: triall-prod/alfresco/acs/solr-data
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: alfresco-volume-claim
+status:
+  availableReplicas: 1
+  conditions:
+  - lastTransitionTime: "2019-06-19T09:46:49Z"
+    lastUpdateTime: "2019-06-19T09:46:49Z"
+    message: Deployment has minimum availability.
+    reason: MinimumReplicasAvailable
+    status: "True"
+    type: Available
+  observedGeneration: 1
+  readyReplicas: 1
+  replicas: 1
+  updatedReplicas: 1

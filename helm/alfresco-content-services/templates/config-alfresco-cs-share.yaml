@@ -1,0 +1,21 @@
+apiVersion: v1
+data:
+  CATALINA_OPTS: ' -Xms1000M -Xmx1000M'
+  CSRF_FILTER_ORIGIN: https://app.triall.io
+  CSRF_FILTER_REFERER: https://app.triall.io/.*
+  JAVA_OPTS: -Dalfresco.proxy=https://app.triall.io:443
+  REPO_HOST: triall-prod-alfresco-alfresco-cs-repository
+  REPO_PORT: "80"
+kind: ConfigMap
+metadata:
+  creationTimestamp: "2019-06-19T09:46:48Z"
+  labels:
+    chart: alfresco-content-services-triall-1.1.6
+    component: share
+    heritage: Tiller
+    release: triall-prod-alfresco
+  name: triall-prod-alfresco-alfresco-cs-share-configmap
+  namespace: triall-prod
+  resourceVersion: "13444596"
+  selfLink: /api/v1/namespaces/triall-prod/configmaps/triall-prod-alfresco-alfresco-cs-share-configmap
+  uid: 284f3afe-9277-11e9-98e6-06ce065d3256
