@@ -1,87 +1,128 @@
-# Defines the deployment for the alfresco content repository app
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: {{ template "content-services.shortname" . }}-repository
+  annotations:
+    deployment.kubernetes.io/revision: "1"
+  creationTimestamp: "2019-06-19T09:46:49Z"
+  generation: 1
   labels:
-    app: {{ template "content-services.shortname" . }}-repository
-    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
+    app: triall-prod-alfresco-alfresco-cs-repository
+    chart: alfresco-content-services-triall-1.1.6
     component: repository
+    heritage: Tiller
+    release: triall-prod-alfresco
+  name: triall-prod-alfresco-alfresco-cs-repository
+  namespace: triall-prod
+  resourceVersion: "49361088"
+  selfLink: /apis/extensions/v1beta1/namespaces/triall-prod/deployments/triall-prod-alfresco-alfresco-cs-repository
+  uid: 288ce175-9277-11e9-98e6-06ce065d3256
 spec:
-  replicas: {{ .Values.repository.replicaCount }}
+  progressDeadlineSeconds: 2147483647
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: triall-prod-alfresco-alfresco-cs-repository
+      component: repository
+      release: triall-prod-alfresco
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
   template:
     metadata:
+      creationTimestamp: null
       labels:
-        app: {{ template "content-services.shortname" . }}-repository
-        release: {{ .Release.Name }}
+        app: triall-prod-alfresco-alfresco-cs-repository
         component: repository
+        release: triall-prod-alfresco
     spec:
-      {{- if .Values.registryPullSecrets }}
-      # only set this secret if a private docker registry variable is defined
-      imagePullSecrets:
-        - name: {{ .Values.registryPullSecrets }}
-      {{- end }}
       containers:
-        - name: {{ .Chart.Name }}
-          image: "{{ .Values.repository.image.repository }}:{{ .Values.repository.image.tag }}"
-          imagePullPolicy: {{ .Values.repository.image.pullPolicy }}
-          envFrom:
-          - secretRef: 
-              name: {{ template "content-services.shortname" . }}-dbsecret
-          {{- if .Values.s3connector.enabled }}
-          - secretRef:
-              # s3 connector secret keys
-              name: {{ template "content-services.shortname" . }}-s3secret
-          {{- end }}
-          - configMapRef:
-              # config map to use, defined in config-repository.yaml
-              name: {{ template "content-services.shortname" . }}-repository-configmap
-          ports:
-            # internal port and the hazelcast port used for clustering
-            - containerPort: {{ .Values.repository.image.internalPort }}
-            - containerPort: {{ .Values.repository.image.hazelcastPort }}
-          resources:
-{{ toYaml .Values.repository.resources | indent 12 }}
-          {{- if .Values.persistence.repository.enabled }}
-          volumeMounts:
-          - name: data
-            mountPath: {{ .Values.persistence.repository.data.mountPath }}
-            subPath: {{ .Values.persistence.repository.data.subPath }}
-          - name: global-properties-shared
-            mountPath: /usr/local/tomcat/shared/classes/alfresco-global.properties
-            subPath: alfresco-global.properties
-          {{- end }}
-          readinessProbe:
-            httpGet:
-              path: /alfresco/api/-default-/public/alfresco/versions/1/probes/-ready-
-              port: {{ .Values.repository.image.internalPort }}
-            initialDelaySeconds: {{ .Values.repository.readinessProbe.initialDelaySeconds }}
-            periodSeconds: {{ .Values.repository.readinessProbe.periodSeconds }}
-            failureThreshold: {{ .Values.repository.readinessProbe.failureThreshold }}
-            timeoutSeconds: {{ .Values.repository.readinessProbe.timeoutSeconds }}
-          livenessProbe:
-            httpGet:
-              path: /alfresco/api/-default-/public/alfresco/versions/1/probes/-live-
-              port: {{ .Values.repository.image.internalPort }}
-            initialDelaySeconds: {{ .Values.repository.livenessProbe.initialDelaySeconds }}
-            periodSeconds: {{ .Values.repository.livenessProbe.periodSeconds }}
-            failureThreshold: 1
-            timeoutSeconds: {{ .Values.repository.livenessProbe.timeoutSeconds }}
-      {{- if eq .Values.database.external false }}
+      - envFrom:
+        - secretRef:
+            name: triall-prod-alfresco-alfresco-cs-dbsecret
+        - configMapRef:
+            name: triall-prod-alfresco-alfresco-cs-repository-configmap
+        image: alfresco/alfresco-content-repository-community:6.1.0-ea
+        imagePullPolicy: Always
+        livenessProbe:
+          failureThreshold: 1
+          httpGet:
+            path: /alfresco/api/-default-/public/alfresco/versions/1/probes/-live-
+            port: 8080
+            scheme: HTTP
+          initialDelaySeconds: 130
+          periodSeconds: 20
+          successThreshold: 1
+          timeoutSeconds: 10
+        name: alfresco-content-services-triall
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        - containerPort: 5701
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 6
+          httpGet:
+            path: /alfresco/api/-default-/public/alfresco/versions/1/probes/-ready-
+            port: 8080
+            scheme: HTTP
+          initialDelaySeconds: 60
+          periodSeconds: 20
+          successThreshold: 1
+          timeoutSeconds: 10
+        resources:
+          limits:
+            memory: 3000Mi
+          requests:
+            memory: 3000Mi
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /usr/local/tomcat/alf_data
+          name: data
+          subPath: triall-prod/alfresco/acs/repository-data
+        - mountPath: /usr/local/tomcat/shared/classes/alfresco-global.properties
+          name: global-properties-shared
+          subPath: alfresco-global.properties
+      dnsPolicy: ClusterFirst
+      imagePullSecrets:
+      - name: quay-registry-secret
       initContainers:
-        # wait for the DB to startup before this deployment can start
-        - name: init-db
-          image: busybox
-          command: ['sh', '-c', 'until nc -w1 {{ printf "%s-%s" .Release.Name .Values.postgresql.nameOverride }} {{ .Values.postgresql.service.port }}; do echo "waiting for {{ printf "%s-%s" .Release.Name .Values.postgresql.nameOverride }}"; sleep 2; done;']
-      {{- end }}
+      - command:
+        - sh
+        - -c
+        - until nc -w1 triall-prod-alfresco-postgresql-acs 5432; do echo "waiting
+          for triall-prod-alfresco-postgresql-acs"; sleep 2; done;
+        image: busybox
+        imagePullPolicy: Always
+        name: init-db
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
       volumes:
-      - name: global-properties-shared
-        configMap:
-          name: {{ template "content-services.shortname" . }}-global-properties-shared
-      {{- if .Values.persistence.repository.enabled }}
+      - configMap:
+          defaultMode: 420
+          name: triall-prod-alfresco-alfresco-cs-global-properties-shared
+        name: global-properties-shared
       - name: data
         persistentVolumeClaim:
-          claimName: {{ .Values.persistence.existingClaim }}
-      {{- end }}
+          claimName: alfresco-volume-claim
+status:
+  availableReplicas: 1
+  conditions:
+  - lastTransitionTime: "2019-06-19T09:46:50Z"
+    lastUpdateTime: "2019-06-19T09:46:50Z"
+    message: Deployment has minimum availability.
+    reason: MinimumReplicasAvailable
+    status: "True"
+    type: Available
+  observedGeneration: 1
+  readyReplicas: 1
+  replicas: 1
+  updatedReplicas: 1
