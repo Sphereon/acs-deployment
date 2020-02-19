@@ -1,22 +1,17 @@
-# Defines the properties required by the alfresco-tika container
 apiVersion: v1
+data:
+  FILE_STORE_URL: http://triall-prod-alfresco-alfresco-filestore:80/alfresco/api/-default-/private/sfs/versions/1/file
+  JAVA_OPTS: ' -Xms256M -Xmx256M'
+  livenessPercent: "400"
+  livenessTransformPeriodSeconds: "600"
+  maxTransformSeconds: "1800"
+  maxTransforms: "10000"
 kind: ConfigMap
 metadata:
-  name: {{ template "content-services.shortname" . }}-tika-configmap
   labels:
-    heritage: {{ .Release.Service }}
-    release: {{ .Release.Name }}
-    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    chart: alfresco-content-services-triall-1.1.6
     component: transformers
-data:
-  # The JAVA_OPTS defined in the values.yaml file for "tika" are set here using proper quotes
-  {{- if .Values.tika.environment }}
-  {{- range $key, $val := .Values.tika.environment }}
-  {{ $key }}: {{ $val | quote }}
-  {{- end }}
-  {{- end }}
-  FILE_STORE_URL: http://{{ template "alfresco.shortname" . }}-filestore:80/alfresco/api/-default-/private/sfs/versions/1/file
-  livenessPercent: "{{ .Values.tika.livenessProbe.livenessPercent }}"
-  livenessTransformPeriodSeconds: "{{ .Values.tika.livenessProbe.livenessTransformPeriodSeconds }}"
-  maxTransforms: "{{ .Values.tika.livenessProbe.maxTransforms }}"
-  maxTransformSeconds: "{{ .Values.tika.livenessProbe.maxTransformSeconds }}"
+    heritage: Tiller
+    release: triall-prod-alfresco
+  name: triall-prod-alfresco-alfresco-cs-tika-configmap
+  namespace: triall-prod

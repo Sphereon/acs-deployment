@@ -1,22 +1,17 @@
-# Defines the properties required by the imagemagick container
 apiVersion: v1
+data:
+  FILE_STORE_URL: http://triall-prod-alfresco-alfresco-filestore:80/alfresco/api/-default-/private/sfs/versions/1/file
+  JAVA_OPTS: ' -Xms256M -Xmx256M'
+  livenessPercent: "150"
+  livenessTransformPeriodSeconds: "600"
+  maxTransformSeconds: "900"
+  maxTransforms: "10000"
 kind: ConfigMap
 metadata:
-  name: {{ template "content-services.shortname" . }}-imagemagick-configmap
   labels:
-    heritage: {{ .Release.Service }}
-    release: {{ .Release.Name }}
-    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    chart: alfresco-content-services-triall-1.1.6
     component: transformers
-data:
-  # The JAVA_OPTS defined in the values.yaml file for the "imagemagick" are set here using proper quotes
-  {{- if .Values.imagemagick.environment }}
-  {{- range $key, $val := .Values.imagemagick.environment }}
-  {{ $key }}: {{ $val | quote }}
-  {{- end }}
-  {{- end }}
-  FILE_STORE_URL: http://{{ template "alfresco.shortname" . }}-filestore:80/alfresco/api/-default-/private/sfs/versions/1/file
-  livenessPercent: "{{ .Values.imagemagick.livenessProbe.livenessPercent }}"
-  livenessTransformPeriodSeconds: "{{ .Values.imagemagick.livenessProbe.livenessTransformPeriodSeconds }}"
-  maxTransforms: "{{ .Values.imagemagick.livenessProbe.maxTransforms }}"
-  maxTransformSeconds: "{{ .Values.imagemagick.livenessProbe.maxTransformSeconds }}"
+    heritage: Tiller
+    release: triall-prod-alfresco
+  name: triall-prod-alfresco-alfresco-cs-imagemagick-configmap
+  namespace: triall-prod

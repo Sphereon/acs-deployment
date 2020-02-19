@@ -1,22 +1,17 @@
-# Defines the properties required by the alfresco-pdf-renderer container
 apiVersion: v1
+data:
+  FILE_STORE_URL: http://triall-prod-alfresco-alfresco-filestore:80/alfresco/api/-default-/private/sfs/versions/1/file
+  JAVA_OPTS: ' -Xms256M -Xmx256M'
+  livenessPercent: "150"
+  livenessTransformPeriodSeconds: "600"
+  maxTransformSeconds: "1200"
+  maxTransforms: "10000"
 kind: ConfigMap
 metadata:
-  name: {{ template "content-services.shortname" . }}-pdfrenderer-configmap
   labels:
-    heritage: {{ .Release.Service }}
-    release: {{ .Release.Name }}
-    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    chart: alfresco-content-services-triall-1.1.6
     component: transformers
-data:
-  # The JAVA_OPTS defined in the values.yaml file for the "pdfrenderer" are set here using proper quotes
-  {{- if .Values.pdfrenderer.environment }}
-  {{- range $key, $val := .Values.pdfrenderer.environment }}
-  {{ $key }}: {{ $val | quote }}
-  {{- end }}
-  {{- end }}
-  FILE_STORE_URL: http://{{ template "alfresco.shortname" . }}-filestore:80/alfresco/api/-default-/private/sfs/versions/1/file
-  livenessPercent: "{{ .Values.pdfrenderer.livenessProbe.livenessPercent }}"
-  livenessTransformPeriodSeconds: "{{ .Values.pdfrenderer.livenessProbe.livenessTransformPeriodSeconds }}"
-  maxTransforms: "{{ .Values.pdfrenderer.livenessProbe.maxTransforms }}"
-  maxTransformSeconds: "{{ .Values.pdfrenderer.livenessProbe.maxTransformSeconds }}"
+    heritage: Tiller
+    release: triall-prod-alfresco
+  name: triall-prod-alfresco-alfresco-cs-pdfrenderer-configmap
+  namespace: triall-prod

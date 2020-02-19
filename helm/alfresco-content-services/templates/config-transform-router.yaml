@@ -1,26 +1,19 @@
-# Defines the properties required by the transform router container
 apiVersion: v1
+data:
+  ACTIVEMQ_PASSWORD: admin
+  ACTIVEMQ_URL: nio://triall-prod-alfresco-activemq-broker:61616
+  ACTIVEMQ_USER: admin
+  FILE_STORE_URL: http://triall-prod-alfresco-alfresco-filestore:80/alfresco/api/-default-/private/sfs/versions/1/file
+  IMAGEMAGICK_URL: http://triall-prod-alfresco-alfresco-cs-imagemagick:80
+  LIBREOFFICE_URL: http://triall-prod-alfresco-alfresco-cs-libreoffice:80
+  PDF_RENDERER_URL: http://triall-prod-alfresco-alfresco-cs-pdfrenderer:80
+  TIKA_URL: http://triall-prod-alfresco-alfresco-cs-tika:80
 kind: ConfigMap
 metadata:
-  name: {{ template "alfresco.shortname" . }}-router-configmap
   labels:
-    heritage: {{ .Release.Service }}
-    release: {{ .Release.Name }}
-    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    chart: alfresco-content-services-triall-1.1.6
     component: transformrouter
-data:
-  {{- if index .Values "alfresco-infrastructure" "activemq" "enabled" }}
-  ACTIVEMQ_URL: nio://{{ .Release.Name }}-activemq-broker:61616
-  ACTIVEMQ_USER: {{ index .Values "alfresco-infrastructure" "activemq" "adminUser" "username" }}
-  ACTIVEMQ_PASSWORD: {{ index .Values "alfresco-infrastructure" "activemq" "adminUser" "password" }}
-  {{- else }}
-  ACTIVEMQ_URL: {{ .Values.messageBroker.url | default (printf "nio://%s-activemq-broker:61616" .Release.Name ) }}
-  ACTIVEMQ_USER: {{ .Values.messageBroker.user }}
-  ACTIVEMQ_PASSWORD: {{ .Values.messageBroker.password }}
-  {{- end }}
-  IMAGEMAGICK_URL: http://{{ template "content-services.shortname" . }}-imagemagick:80
-  PDF_RENDERER_URL: http://{{ template "content-services.shortname" . }}-pdfrenderer:80
-  LIBREOFFICE_URL: http://{{ template "content-services.shortname" . }}-libreoffice:80
-  TIKA_URL: http://{{ template "content-services.shortname" . }}-tika:80
-  FILE_STORE_URL: http://{{ template "alfresco.shortname" . }}-filestore:80/alfresco/api/-default-/private/sfs/versions/1/file
-  
+    heritage: Tiller
+    release: triall-prod-alfresco
+  name: triall-prod-alfresco-alfresco-router-configmap
+  namespace: triall-prod

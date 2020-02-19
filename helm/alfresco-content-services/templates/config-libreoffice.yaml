@@ -1,22 +1,17 @@
-# Defines the properties required by the libreoffice container
 apiVersion: v1
+data:
+  FILE_STORE_URL: http://triall-prod-alfresco-alfresco-filestore:80/alfresco/api/-default-/private/sfs/versions/1/file
+  JAVA_OPTS: ' -Xms256M -Xmx256M'
+  livenessPercent: "250"
+  livenessTransformPeriodSeconds: "600"
+  maxTransformSeconds: "1800"
+  maxTransforms: "99999"
 kind: ConfigMap
 metadata:
-  name: {{ template "content-services.shortname" . }}-libreoffice-configmap
   labels:
-    heritage: {{ .Release.Service }}
-    release: {{ .Release.Name }}
-    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    chart: alfresco-content-services-triall-1.1.6
     component: transformers
-data:
-  # The JAVA_OPTS defined in the values.yaml file for the "libreoffice" are set here using proper quotes
-  {{- if .Values.libreoffice.environment }}
-  {{- range $key, $val := .Values.libreoffice.environment }}
-  {{ $key }}: {{ $val | quote }}
-  {{- end }}
-  {{- end }}
-  FILE_STORE_URL: http://{{ template "alfresco.shortname" . }}-filestore:80/alfresco/api/-default-/private/sfs/versions/1/file
-  livenessPercent: "{{ .Values.libreoffice.livenessProbe.livenessPercent }}"
-  livenessTransformPeriodSeconds: "{{ .Values.libreoffice.livenessProbe.livenessTransformPeriodSeconds }}"
-  maxTransforms: "{{ .Values.libreoffice.livenessProbe.maxTransforms }}"
-  maxTransformSeconds: "{{ .Values.libreoffice.livenessProbe.maxTransformSeconds }}"
+    heritage: Tiller
+    release: triall-prod-alfresco
+  name: triall-prod-alfresco-alfresco-cs-libreoffice-configmap
+  namespace: triall-prod
