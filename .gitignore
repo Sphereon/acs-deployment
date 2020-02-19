@@ -1,7 +1,9 @@
 *.class
+install*.cmd
 
 war/overlays
 alfresco/*
+secrets/*
 
 # Eclipse
 .classpath
