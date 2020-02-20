@@ -16,8 +16,8 @@ spec:
     metadata:
       labels:
         app: triall-prod-alfresco-alfresco-cs-pdfrenderer
-        component: transformers
         release: triall-prod-alfresco
+        component: transformers
     spec:
       imagePullSecrets:
         - name: quay-registry-secret
@@ -59,3 +59,4 @@ spec:
       schedulerName: default-scheduler
       securityContext: {}
       terminationGracePeriodSeconds: 30
+

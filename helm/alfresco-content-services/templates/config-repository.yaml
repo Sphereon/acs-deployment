@@ -2,7 +2,6 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  #
   name: triall-prod-alfresco-alfresco-cs-repository-configmap
   labels:
     heritage: Tiller
@@ -25,3 +24,4 @@ data:
   CATALINA_OPTS: ' $ALFRESCO_OPTS -Ddb.driver=org.postgresql.Driver -Ddb.url=jdbc:postgresql://triall-prod-alfresco-postgresql-acs:5432/alfresco
     -Ddb.username=$DATABASE_USERNAME -Ddb.password=$DATABASE_PASSWORD -Ds3.accessKey=$ACCESSKEY
     -Ds3.secretKey=$SECRETKEY -Ds3.encryption=$ENCRYPTION -Ds3.awsKmsKeyId=$KMSKEYID'
+

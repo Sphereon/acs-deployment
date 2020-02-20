@@ -1,4 +1,10 @@
 apiVersion: v1
+data:
+  JAVA_OPTS: ' -Xms256M -Xmx256M'
+  livenessPercent: "150"
+  livenessSavePeriodSeconds: "600"
+  scheduler.cleanup.interval: "86400000"
+  scheduler.content.age.millis: "86400000"
 kind: ConfigMap
 metadata:
   name: triall-prod-alfresco-alfresco-filestore-configmap
@@ -14,3 +20,4 @@ data:
   livenessSavePeriodSeconds: "600"
   scheduler.cleanup.interval: "86400000"
   scheduler.content.age.millis: "86400000"
+

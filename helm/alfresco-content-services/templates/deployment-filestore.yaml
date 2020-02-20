@@ -16,8 +16,8 @@ spec:
     metadata:
       labels:
         app: triall-prod-alfresco-alfresco-filestore
-        component: transformers
         release: triall-prod-alfresco
+        component: transformers
     spec:
       containers:
       - envFrom:
@@ -67,4 +67,3 @@ spec:
       - name: data
         persistentVolumeClaim:
           claimName: alfresco-volume-claim
-

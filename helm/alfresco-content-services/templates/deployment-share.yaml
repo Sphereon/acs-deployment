@@ -9,10 +9,10 @@ metadata:
     release: triall-prod-alfresco
     heritage: Tiller
     component: share
-spec:
   replicas: 1
   template:
     metadata:
+      creationTimestamp: null
       labels:
         app: triall-prod-alfresco-alfresco-cs-share
         release: triall-prod-alfresco

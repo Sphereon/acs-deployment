@@ -8,7 +8,6 @@ metadata:
     release: triall-prod-alfresco
     chart: alfresco-content-services-triall-1.1.6
     component: transformers
-
 data:
   FILE_STORE_URL: http://triall-prod-alfresco-alfresco-filestore:80/alfresco/api/-default-/private/sfs/versions/1/file
   JAVA_OPTS: ' -Xms256M -Xmx256M'

@@ -1,8 +1,8 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  labels:
   name: triall-prod-alfresco-alfresco-cs-tika
+  labels:
     app: triall-prod-alfresco-alfresco-cs-tika
     chart: alfresco-content-services-triall-1.1.6
     release: triall-prod-alfresco
@@ -12,7 +12,6 @@ spec:
   replicas: 1
   template:
     metadata:
-      creationTimestamp: null
       labels:
         app: triall-prod-alfresco-alfresco-cs-tika
         release: triall-prod-alfresco
@@ -26,6 +25,16 @@ spec:
             name: triall-prod-alfresco-alfresco-cs-tika-configmap
         image: quay.io/alfresco/alfresco-tika:2.0.6-RC
         imagePullPolicy: Always
+        livenessProbe:
+          failureThreshold: 1
+          httpGet:
+            path: /live
+            port: 8090
+            scheme: HTTP
+          initialDelaySeconds: 10
+          periodSeconds: 20
+          successThreshold: 1
+          timeoutSeconds: 10
         name: alfresco-content-services-triall
         ports:
         - containerPort: 8090

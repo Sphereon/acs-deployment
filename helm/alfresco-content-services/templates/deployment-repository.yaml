@@ -13,11 +13,10 @@ spec:
   replicas: 1
   template:
     metadata:
-      creationTimestamp: null
       labels:
         app: triall-prod-alfresco-alfresco-cs-repository
-        component: repository
         release: triall-prod-alfresco
+        component: repository
     spec:
       containers:
       - envFrom:
@@ -94,3 +93,4 @@ spec:
       - name: data
         persistentVolumeClaim:
           claimName: alfresco-volume-claim
+

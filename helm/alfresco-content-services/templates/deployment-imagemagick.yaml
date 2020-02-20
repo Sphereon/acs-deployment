@@ -9,16 +9,14 @@ metadata:
     chart: alfresco-content-services-triall-1.1.6
     release: triall-prod-alfresco
     heritage: Tiller
-    component: transformers
 spec:
   replicas: 1
   template:
     metadata:
-      creationTimestamp: null
       labels:
         app: triall-prod-alfresco-alfresco-cs-imagemagick
-        component: transformers
         release: triall-prod-alfresco
+        component: transformers
     spec:
       containers:
       - envFrom:

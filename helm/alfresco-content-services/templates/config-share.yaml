@@ -15,4 +15,3 @@ data:
   JAVA_OPTS: -Dalfresco.proxy=https://app.triall.io:443
   REPO_HOST: triall-prod-alfresco-alfresco-cs-repository
   REPO_PORT: "80"
-
