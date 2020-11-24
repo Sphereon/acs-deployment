@@ -14,6 +14,7 @@ data:
             "copyright":
                 "© 2017 - 2018 Triall, Alfresco Software, Inc. All rights reserved."
         },
+        "blockchainAgentHost": "https://{hostname}{:port}",
         "experimental": {
             "cardview": false,
             "extensions": false,

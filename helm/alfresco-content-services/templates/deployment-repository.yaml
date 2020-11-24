@@ -85,3 +85,4 @@ spec:
         persistentVolumeClaim:
           claimName: {{ .Values.persistence.existingClaim }}
       {{- end }}
+      entrypoint : [/usr/local/bin/entrypoint-amps.sh]

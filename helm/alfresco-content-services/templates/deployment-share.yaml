@@ -57,3 +57,4 @@ spec:
       - name: global-properties-shared
         configMap:
           name: {{ template "content-services.shortname" . }}-global-properties-shared
+      entrypoint : [/usr/local/bin/entrypoint-amps-share.sh]
