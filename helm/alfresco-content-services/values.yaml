@@ -13,7 +13,7 @@ repository:
   replicaCount: 2
   image:
     repository: sphereonregistrydev.azurecr.io/alfresco-audit-extension/alfresco-content-services-alfresco-audit-extension
-    tag: 1.0
+    tag: "1.0"
     pullPolicy: Always
     internalPort: 8080
     hazelcastPort: 5701
@@ -248,7 +248,7 @@ share:
   replicaCount: 1
   image:
     repository: sphereonregistrydev.azurecr.io/alfresco-audit-extension/alfresco-share-alfresco-audit-extension
-    tag: 1.0
+    tag: "1.0"
     pullPolicy: Always
     internalPort: 8080
   service:

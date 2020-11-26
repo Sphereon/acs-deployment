@@ -21,7 +21,7 @@ spec:
       {{- if .Values.registryPullSecrets }}
       # only set this secret if a private docker registry variable is defined
       imagePullSecrets:
-        - name: {{ .Values.registryPullSecrets }}
+        - name: sphereonregistrydev
       {{- end }}
       containers:
         - name: {{ .Chart.Name }}
@@ -85,4 +85,3 @@ spec:
         persistentVolumeClaim:
           claimName: {{ .Values.persistence.existingClaim }}
       {{- end }}
-      entrypoint : [/usr/local/bin/entrypoint-amps.sh]
