@@ -25,7 +25,7 @@ spec:
       imagePullSecrets:
         - name: sphereonregistrydev
       containers:
-      - image: sphereonregistrydev.azurecr.io/alfresco/adf-demo:TRLL-30
+      - image: sphereonregistrydev.azurecr.io/alfresco/adf-demo:0.1.8
         imagePullPolicy: Always
         name: alfresco-adf-demo
         ports:
